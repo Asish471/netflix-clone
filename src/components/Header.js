@@ -38,6 +38,7 @@ const Header = () => {
       
       if (!token) {
         navigate('/login')
+        isAuthenticated(false)
         console.error("No refresh token found in localStorage.");
         
       }
@@ -52,7 +53,8 @@ const Header = () => {
   
       if (data?.revokeToken?.success) {
         localStorage.clear();
-        navigate('/login');
+        navigate('/');
+       
       } else {
         console.error('Logout failed:', data?.revokeToken?.errors || 'Unknown error');
       }
@@ -60,6 +62,9 @@ const Header = () => {
       console.error("Apollo error:", err);
     }
   };
+  useEffect(()=>{
+
+  },[isAuthenticated])
   
   
   
@@ -68,7 +73,7 @@ const Header = () => {
   const hideAuthButton=hideAuthButtonRoutes.includes(location.pathname);
 
   return (
-    <header className="topNav">
+    <header className="topNav position-relative">
       <nav className="navbar navbar-expand-md navbar-dark">
         <div className="container-fluid">
           <Link className="navbar-brand" to='/'>
